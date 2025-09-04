@@ -7,5 +7,4 @@ tqdm==4.67.1
 gunicorn==23.0.0
 python-dotenv==1.0.0
 requests==2.31.0
-lxml==4.9.3
 gunicorn==23.0.0
