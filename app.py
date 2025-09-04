@@ -6,7 +6,7 @@ from contextlib import redirect_stdout, redirect_stderr
 
 # Import the working scraping components
 try:
-    from test import get_html_with_human_behavior
+    from main import get_html_with_human_behavior
     from hackclub_ai import get_hackclub_ai
     from langchain_core.messages import HumanMessage
     from bs4 import BeautifulSoup
