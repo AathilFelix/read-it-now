@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}Summary - Read It Now{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        padding: 20px;
+    }
+    
+    .container {
+        max-width: 800px;
+        text-align: left;
+    }
+    
+    .header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+    
+    .article-title {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+    
+    .article-title h2 {
+        margin: 0;
+        font-size: 1.4em;
+        line-height: 1.4;
+    }
+    
+    .summary-section {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+    
+    .summary-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        color: #495057;
+        font-weight: 600;
+    }
+    
+    .summary-content {
+        color: #333;
+        line-height: 1.7;
+        font-size: 16px;
+    }
+    
+    .summary-content p {
+        margin-bottom: 15px;
+    }
+    
+    .url-info {
+        background: #e3f2fd;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        word-break: break-all;
+        font-size: 14px;
+        color: #1976d2;
+    }
+    
+    .reading-time {
+        text-align: center;
+        color: #28a745;
+        font-weight: 600;
+        font-size: 18px;
+        margin-top: 20px;
+        padding: 15px;
+        background: #d4edda;
+        border-radius: 8px;
+    }
+    
+    .loading {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+    }
+    
+    .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #4facfe;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container wide-container">
+    <a href="/" class="back-btn">← New Article</a>
+    
+    <div class="header">
+        <h1>📖 Your 1-Minute Summary</h1>
+    </div>
+    
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Loading your summary...</p>
+    </div>
+    
+    <div id="content" style="display: none;">
+        <div class="url-info">
+            <strong>Source:</strong> <span id="articleUrl"></span>
+        </div>
+        
+        <div class="article-title">
+            <h2 id="articleTitle"></h2>
+        </div>
+        
+        <div class="summary-section">
+            <div class="summary-header">
+                ⚡ 1-Minute Summary
+            </div>
+            <div class="summary-content" id="summaryContent"></div>
+        </div>
+        
+        <div class="reading-time">
+            ✅ Read in ~1 minute • AI-powered extraction
+        </div>
+    </div>
+</div>
+
+<script>
+    // Get the summary data from sessionStorage
+    const summaryData = JSON.parse(sessionStorage.getItem('summaryResult'));
+    
+    if (summaryData && summaryData.success) {
+        // Hide loading and show content
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+        
+        // Populate the content
+        document.getElementById('articleUrl').textContent = summaryData.url;
+        document.getElementById('articleTitle').textContent = summaryData.title;
+        document.getElementById('summaryContent').innerHTML = summaryData.summary.replace(/\n/g, '<br><br>');
+        
+        // Clear the sessionStorage
+        sessionStorage.removeItem('summaryResult');
+    } else {
+        // Show error and redirect
+        document.getElementById('loading').innerHTML = '<p style="color: red;">Error loading summary. <a href="/">Try again</a></p>';
+    }
+</script>
+{% endblock %}

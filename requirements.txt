@@ -1,0 +1,11 @@
+langchain
+langchain-openai
+click
+requests
+beautifulsoup4
+selenium
+webdriver-manager
+python-dotenv
+validators
+playwright
+undetected-chromedriver
