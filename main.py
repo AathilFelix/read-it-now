@@ -87,14 +87,14 @@ def get_html_with_human_behavior(url):
                 '--no-sandbox',
                 '--disable-dev-shm-usage',
                 '--disable-blink-features=AutomationControlled',
-                # '--disable-web-security',
-                # '--ignore-certificate-errors',
-                # '--disable-extensions',
-                # '--disable-plugins',
-                # '--disable-default-apps',
-                # '--disable-background-timer-throttling',
-                # '--disable-renderer-backgrounding',
-                # '--disable-backgrounding-occluded-windows'
+                '--disable-web-security',
+                '--ignore-certificate-errors',
+                '--disable-extensions',
+                '--disable-plugins',
+                '--disable-default-apps',
+                '--disable-background-timer-throttling',
+                '--disable-renderer-backgrounding',
+                '--disable-backgrounding-occluded-windows'
             ]
         )
         
@@ -109,38 +109,38 @@ def get_html_with_human_behavior(url):
         )
         
         # Add scripts to hide automation
-        # context.add_init_script("""
-        #     // Remove webdriver property
-        #     delete navigator.__proto__.webdriver;
+        context.add_init_script("""
+            // Remove webdriver property
+            delete navigator.__proto__.webdriver;
             
-        #     // Mock plugins
-        #     Object.defineProperty(navigator, 'plugins', {
-        #         get: () => [
-        #             {0: {type: "application/x-google-chrome-pdf", suffixes: "pdf", description: "Portable Document Format"}},
-        #         ],
-        #     });
+            // Mock plugins
+            Object.defineProperty(navigator, 'plugins', {
+                get: () => [
+                    {0: {type: "application/x-google-chrome-pdf", suffixes: "pdf", description: "Portable Document Format"}},
+                ],
+            });
             
-        #     // Mock languages
-        #     Object.defineProperty(navigator, 'languages', {
-        #         get: () => ['en-US', 'en'],
-        #     });
+            // Mock languages
+            Object.defineProperty(navigator, 'languages', {
+                get: () => ['en-US', 'en'],
+            });
             
-        #     // Add chrome object
-        #     window.chrome = {
-        #         runtime: {},
-        #         loadTimes: function() {},
-        #         csi: function() {},
-        #         app: {}
-        #     };
+            // Add chrome object
+            window.chrome = {
+                runtime: {},
+                loadTimes: function() {},
+                csi: function() {},
+                app: {}
+            };
             
-        #     // Mock permissions
-        #     const originalQuery = window.navigator.permissions.query;
-        #     window.navigator.permissions.query = (parameters) => (
-        #         parameters.name === 'notifications' ?
-        #             Promise.resolve({ state: Notification.permission }) :
-        #             originalQuery(parameters)
-        #     );
-        # """)
+            // Mock permissions
+            const originalQuery = window.navigator.permissions.query;
+            window.navigator.permissions.query = (parameters) => (
+                parameters.name === 'notifications' ?
+                    Promise.resolve({ state: Notification.permission }) :
+                    originalQuery(parameters)
+            );
+        """)
         
         # Set human-like headers
         context.set_extra_http_headers({
