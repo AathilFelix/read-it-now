@@ -11,65 +11,19 @@ try:
     from langchain_core.messages import HumanMessage
     from bs4 import BeautifulSoup
     import re
-    import requests
 except ImportError as e:
     print(f"Error: Could not import required modules: {e}")
     sys.exit(1)
 
 app = Flask(__name__)
 
-# Production configuration for Render
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-render')
-app.config['DEBUG'] = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
-
-def get_html_fallback(url):
-    """Fallback method using requests when Playwright fails on Render"""
-    print("🔄 Using requests fallback method...")
-    
-    user_agents = [
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-    ]
-    
-    for i, ua in enumerate(user_agents):
-        try:
-            headers = {
-                'User-Agent': ua,
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Language': 'en-US,en;q=0.5',
-                'Accept-Encoding': 'gzip, deflate',
-                'DNT': '1',
-                'Connection': 'keep-alive',
-                'Upgrade-Insecure-Requests': '1'
-            }
-            
-            print(f"🔄 Trying user agent {i+1}...")
-            response = requests.get(url, headers=headers, timeout=15)
-            
-            if response.status_code == 200:
-                print(f"✅ Success with requests method!")
-                return response.text
-                
-        except Exception as e:
-            print(f"❌ Requests attempt {i+1} failed: {e}")
-            continue
-    
-    return None
-
 def extract_and_summarize(url):
-    """Extract article and return title, content, and 1-minute summary - Render optimized"""
+    """Extract article and return title, content, and 1-minute summary"""
     try:
         print(f"🔄 Processing: {url}")
 
-        # Try Playwright first, fall back to requests if it fails
-        html_content = None
-        try:
-            html_content = get_html_with_human_behavior(url)
-        except Exception as e:
-            print(f"❌ Playwright failed: {e}")
-            print("🔄 Falling back to requests...")
-            html_content = get_html_fallback(url)
+        # Get HTML content using human behavior simulation
+        html_content = get_html_with_human_behavior(url)
 
         if not html_content:
             return {"error": "Failed to access the article. The site might have strong anti-bot protection."}
@@ -178,14 +132,5 @@ def summary():
     """Display the article summary"""
     return render_template('summary.html')
 
-@app.route('/health')
-def health():
-    """Health check endpoint for Render"""
-    return jsonify({'status': 'healthy', 'service': 'read-it-now'})
-
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5001))
-    print("📖 Starting Read It Now server...")
-    print(f"🚀 Visit: http://localhost:{port}")
-    print("💡 Turn any article into a 1-minute summary!")
-    app.run(debug=app.config['DEBUG'], host='0.0.0.0', port=port)
+    app.run(debug=True)

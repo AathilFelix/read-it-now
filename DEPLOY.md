@@ -27,12 +27,14 @@ This guide will help you deploy your Read It Now app on Render.
 4. **Configure the service:**
 
    **Basic Settings:**
+
    - **Name**: `read-it-now` (or your preferred name)
    - **Environment**: `Python 3`
    - **Region**: Choose closest to your users
    - **Branch**: `main`
 
    **Build & Deploy:**
+
    - **Build Command**: `./build.sh`
    - **Start Command**: `./start.sh`
 
@@ -62,19 +64,23 @@ PYTHONUNBUFFERED=1
 ## 🔧 Configuration Files Explained
 
 ### `build.sh`
+
 - Installs Python dependencies
 - Downloads Playwright browsers
 - Verifies installation
 
 ### `start.sh`
+
 - Sets Render-specific environment variables
 - Starts Gunicorn with proper configuration
 
 ### `render.yaml` (Optional)
+
 - Infrastructure as Code configuration
 - Can be used instead of manual setup
 
 ### `requirements.txt`
+
 - All Python dependencies including Playwright
 - Optimized for Render deployment
 
@@ -83,6 +89,7 @@ PYTHONUNBUFFERED=1
 ### Common Issues:
 
 1. **Build Fails:**
+
    ```bash
    # Check build.sh permissions
    chmod +x build.sh
@@ -90,11 +97,13 @@ PYTHONUNBUFFERED=1
    ```
 
 2. **Playwright Issues:**
+
    - Render automatically installs browsers during build
    - Check build logs for Playwright installation errors
    - Fallback to requests method is implemented
 
 3. **Memory Issues:**
+
    - Render Free tier has 512MB RAM limit
    - App is optimized for single worker
    - Consider upgrading plan for heavy usage
@@ -107,18 +116,21 @@ PYTHONUNBUFFERED=1
 ### Debugging:
 
 1. **Check Build Logs:**
+
    - Go to Render Dashboard → Your Service → Logs
    - Look for build errors
 
 2. **Check Runtime Logs:**
+
    - Monitor application logs for errors
    - Check for ImportError or dependency issues
 
 3. **Test Locally:**
+
    ```bash
    # Test build script
    ./build.sh
-   
+
    # Test start script
    ./start.sh
    ```
@@ -126,11 +138,13 @@ PYTHONUNBUFFERED=1
 ## 🎉 Success!
 
 Once deployed, your app will be available at:
+
 ```
 https://your-service-name.onrender.com
 ```
 
 ### Features Available:
+
 - ✅ **Article Summarization**: Paste any URL → Get 1-minute summary
 - ✅ **Anti-Bot Protection**: Playwright with fallback to requests
 - ✅ **Mobile Friendly**: Responsive design
@@ -154,6 +168,7 @@ For Read It Now, Free tier is sufficient for testing, Starter for light producti
 ## 🔄 Updates
 
 To update your app:
+
 1. Push changes to GitHub
 2. Render automatically detects and redeploys
 3. Zero-downtime deployments
