@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 import time
 import re
 import random
-from tqdm import tqdm
 
 def mimic_human_browsing(page, url):
     """Mimic actual human browsing behavior with progress tracking"""
@@ -21,42 +20,29 @@ def mimic_human_browsing(page, url):
         "Final content load"
     ]
     
-    progress = tqdm(steps, desc="Human simulation", ncols=70)
     
     # 1. Start by visiting the homepage first (like a real user)
     base_url = "/".join(url.split("/")[:3])
-    progress.set_description("📱 Visiting homepage")
-    progress.update(1)
     
     try:
         page.goto(base_url, wait_until='domcontentloaded', timeout=20000)
         time.sleep(random.uniform(1, 2))
         
-        # Human-like mouse movements and scrolling on homepage
-        progress.set_description("🖱️ Mouse movements")
-        progress.update(1)
         
         page.mouse.move(random.randint(100, 800), random.randint(100, 600))
         page.evaluate("window.scrollTo(0, 200)")
         time.sleep(random.uniform(0.5, 1))
         
         # Now navigate to the actual article
-        progress.set_description("Loading article...")
-        progress.update(1)
         page.goto(url, wait_until='domcontentloaded', timeout=20000)
         
     except Exception as e:
-        progress.set_description("Direct navigation...")
         page.goto(url, wait_until='domcontentloaded', timeout=20000)
     
     # 2. Wait like a human reading the page (reduced)
-    progress.set_description("📖 Reading simulation")
-    progress.update(1)
     time.sleep(random.uniform(1.5, 3))  # Reduced from 3-6
     
     # 3. Human-like scrolling pattern (faster)
-    progress.set_description("📜 Scrolling")
-    progress.update(1)
     
     scroll_positions = [0, 300, 600, 400, 800]
     for pos in scroll_positions:
@@ -69,11 +55,8 @@ def mimic_human_browsing(page, url):
         )
         time.sleep(random.uniform(0.1, 0.3)) 
     
-    progress.set_description("✅ Content ready")
-    progress.update(1)
     time.sleep(random.uniform(1, 2))
     
-    progress.close()
 
 def get_html_with_human_behavior(url):
     """Get HTML by perfectly mimicking human behavior - headless for server"""
