@@ -60,6 +60,43 @@
         margin-bottom: 15px;
     }
     
+    /* Markdown formatting styles */
+    .summary-content strong {
+        font-weight: 700;
+        color: #2c3e50;
+    }
+    
+    .summary-content em {
+        font-style: italic;
+        color: #34495e;
+    }
+    
+    .summary-content h1, 
+    .summary-content h2, 
+    .summary-content h3 {
+        color: #2980b9;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .summary-content ul, 
+    .summary-content ol {
+        margin: 15px 0;
+        padding-left: 25px;
+    }
+    
+    .summary-content li {
+        margin-bottom: 8px;
+    }
+    
+    .summary-content blockquote {
+        border-left: 4px solid #4facfe;
+        margin: 15px 0;
+        padding-left: 15px;
+        color: #555;
+        font-style: italic;
+    }
+    
     .url-info {
         background: #e3f2fd;
         padding: 15px;
@@ -151,7 +188,10 @@
         // Populate the content
         document.getElementById('articleUrl').textContent = summaryData.url;
         document.getElementById('articleTitle').textContent = summaryData.title;
-        document.getElementById('summaryContent').innerHTML = summaryData.summary.replace(/\n/g, '<br><br>');
+        
+        // Use HTML formatted summary if available, otherwise fallback to plain text with markdown processing
+        const summaryContent = summaryData.summary_html || summaryData.summary.replace(/\n/g, '<br><br>');
+        document.getElementById('summaryContent').innerHTML = summaryContent;
         
         // Clear the sessionStorage
         sessionStorage.removeItem('summaryResult');
