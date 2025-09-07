@@ -4,63 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Read It Now{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <style>
-        * {
+        body {
+            font-family: sans-serif;
+            background: #acc1d5;
+            color: #1b1a1a;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .container {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            max-width: 600px;
-            width: 90%;
-            text-align: center;
-        }
-        
-        .wide-container {
-            max-width: 800px;
-        }
-        
-        .back-btn {
-            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 20px;
-            font-weight: 500;
-            transition: transform 0.2s;
-        }
-        
-        .back-btn:hover {
-            transform: translateY(-1px);
-        }
-        
-        h1 {
-            color: #333;
+
+        h1, h2 {
+            font-weight: 1000;
             margin-bottom: 10px;
-            font-size: 2.8em;
         }
+
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     {% block content %}{% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

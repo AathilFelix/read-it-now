@@ -4,160 +4,52 @@
 
 {% block extra_css %}
 <style>
-    .subtitle {
-        color: #666;
-        margin-bottom: 30px;
-        font-size: 1.2em;
-        line-height: 1.5;
-    }
-    
-    .highlight {
-        color: #4facfe;
-        font-weight: 600;
-    }
-    
-    .form-group {
-        margin-bottom: 25px;
-    }
-    
-    input[type="url"] {
-        width: 100%;
-        padding: 18px;
-        border: 2px solid #e1e5e9;
-        border-radius: 12px;
-        font-size: 16px;
-        transition: all 0.3s;
-    }
-    
-    input[type="url"]:focus {
-        outline: none;
-        border-color: #4facfe;
-        box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
-    }
-    
-    .submit-btn {
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        color: white;
-        border: none;
-        padding: 18px 35px;
-        font-size: 16px;
-        font-weight: 600;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.2s;
-        width: 100%;
-    }
-    
-    .submit-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
-    }
-    
-    .loading {
-        display: none;
-        margin-top: 25px;
-        color: #666;
-    }
-    
-    .spinner {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #4facfe;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        animation: spin 1s linear infinite;
-        margin: 20px auto;
-    }
-    
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    
-    .features {
-        margin-top: 35px;
-        text-align: left;
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 12px;
-    }
-    
-    .feature {
-        margin: 8px 0;
-        color: #555;
-        font-size: 14px;
-    }
-    
-    .example-urls {
-        margin-top: 20px;
-        text-align: left;
-    }
-    
-    .example-url {
-        background: #e3f2fd;
-        padding: 8px 12px;
-        border-radius: 6px;
-        margin: 5px 0;
-        font-size: 13px;
-        color: #1976d2;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-    
-    .example-url:hover {
-        background: #bbdefb;
-    }
+
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>📖 Read It Now</h1>
+<div class="container text-center">
+    <h1 class="">Read It Now</h1>
     <p class="subtitle">
-        Turn any article into a <span class="highlight">1-minute summary</span><br>
-        <span class="highlight">Certain Websites may not work properly due to strong anti bot policies</span><br>
-        Just paste the URL and get the key points instantly
+        An article could be lengthy and boring, here comes the solution an AI article summarizer which summarizes a article no
+        matter how long into a 1 minute readable, so no more laziness or hesitation just "READ-IT-NOW". Certain websites have
+        strong anti bot measures and geo fencing issues please try a different website for the article. The project uses a
+        custom made AI agent which helps in scraping content and parsing the useful info to AI to summarize all backed by hack
+        club AI. It is hosted on NEST and will take a bit time for processing the data so kindly be patient.
     </p>
     
     <form id="summaryForm">
-        <div class="form-group">
+        <div class="mb-3">
             <input 
                 type="url" 
                 id="url" 
-                name="url" 
+                name="url"
+                class="form-control form-control-lg"
                 placeholder="Paste any article URL here (news, blog, research...)"
                 required
             >
         </div>
-        <button type="submit" class="submit-btn">
-            ⚡ Get 1-Minute Summary
+        <button type="submit" class="btn btn-primary btn-lg w-100">
+            Get Summary
         </button>
     </form>
     
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
-        <p><strong>🤖 AI is reading and analyzing...</strong><br>
+    <div class="loading" id="loading" style="display: none; margin: 0 auto; text-align: center;">
+        <div class="spinner" style="margin: 0 auto;"></div>
+        <p style="margin-top: 10px;"><strong>AI is reading and analyzing...</strong><br>
         This takes 15-20 seconds for quality extraction</p>
     </div>
     
-    <div class="features">
-        <h3 style="margin-bottom: 15px; color: #333;">✨ What you get:</h3>
-        <div class="feature">📝 Clean article title and content</div>
-        <div class="feature">⚡ AI-powered 1-minute summary</div>
-        <div class="feature">🌐 Supports most of the news site, blog, or article</div>
+    <div class="features mt-5">
+        <h3 style="margin-bottom: 15px; color: #333;">What you get:</h3>
+        <ul class="list-unstyled">
+            <li class="mb-2">Clean article title and content</li>
+            <li class="mb-2">1 minute AI summary</li>
+            <li class="mb-2">Handles most news/blog/research sites</li>
+            <li class="mb-2">Powered by Hack Club AI</li>
+        </ul>
         
-        <div class="example-urls">
-            <strong>Try these examples:</strong>
-            <div class="example-url" onclick="fillUrl('https://www.bbc.com/news/articles/crkzgkkpx0lo')">
-                BBC News Article
-            </div>
-            <div class="example-url" onclick="fillUrl('https://edition.cnn.com/2025/08/26/tech/openai-classroom-software-students')">
-                CNN Article
-            </div>
-            <div class="example-url" onclick="fillUrl('https://www.ndtv.com/science/earths-slowing-rotation-may-explain-rise-of-oxygen-in-atmosphere-study-finds-9204280')">
-                NDTV News
-            </div>
-        </div>
     </div>
 </div>
 
